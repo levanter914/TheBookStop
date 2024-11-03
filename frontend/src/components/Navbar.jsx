@@ -16,12 +16,13 @@ const Navbar = () => {
   };
 
   return (
-    <header className="max-w-screen-2xl mx-auto px-4 py-4 ">
+    <header className="max-w-screen-2xl mx-auto px-4 py-auto ">
       <nav className="flex items-center justify-between flex-wrap">
         {/* Left side - Logo */}
         <div className="flex items-center md:gap-16 gap-2">
           <Link to="/">
-            <GoBook className="text-3xl md:text-4xl" />
+            {/* <GoBook className="text-3xl md:text-4xl" /> */}
+            <img src="./public/logo.png" alt="" className="w-20" />
           </Link>
         </div>
 
