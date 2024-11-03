@@ -3,4 +3,4 @@ must install to run the code
 Front end:- 
   npm install
   npm install react-router-dom
-  
+  npm run dev
