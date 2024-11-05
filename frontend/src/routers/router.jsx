@@ -27,6 +27,34 @@ const router = createBrowserRouter([
         path: "/sell-books",
         element: <div>sell</div>,
       },
+      {
+        path: "/cart",
+        element: <div>cart</div>,
+      },
+      {
+        path: "/my-listings",
+        element: <div>my-listings</div>,
+      },
+      {
+        path: "/user-reviews",
+        element: <div>user-reviews</div>,
+      },
+      {
+        path: "/my-profile",
+        element: <div>My profile</div>,
+      },
+      {
+        path: "/community",
+        element: <div>Community</div>,
+      },
+      {
+        path: "/login",
+        element: <div>login</div>,
+      },
+      {
+        path: "/logout",
+        element: <div>logout</div>,
+      },
     ],
   },
   
