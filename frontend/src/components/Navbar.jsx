@@ -5,7 +5,7 @@ import { FaUserLarge } from "react-icons/fa6";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { FaShoppingCart } from "react-icons/fa";
 import avatarImg from "../assets/avatar.png";
-import logo from "../../public/logo.png";
+import logo from "/logo.png";
 
 const navigation = [
   { name: "Store", href: "/store" },
@@ -14,6 +14,7 @@ const navigation = [
   { name: "My Profile", href: "/my-profile" },
   { name: "My Listings", href: "/my-listings" },
   { name: "Orders", href: "/orders" },
+  { name: "messages", href: "/messages" },
   { name: "User Reviews", href: "/user-reviews" },
   { name: "Log Out", href: "/logout" },
 ];
