@@ -80,11 +80,11 @@ const Books = () => {
           1180: { slidesPerView: 3, spaceBetween: 50 },
         }}
         modules={[Pagination, Navigation]}
-        className="mySwiper rounded-lg"
+        className="mySwiper rounded-lg mb-2 "
       >
         {filteredBooks.length > 0 &&
           filteredBooks.map((book, index) => (
-            <SwiperSlide key={index}>
+            <SwiperSlide key={index} >
               <Store book={book} />
             </SwiperSlide>
           ))}
