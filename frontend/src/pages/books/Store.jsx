@@ -6,42 +6,53 @@ import { Link } from "react-router-dom";
 
 const Store = ({ book }) => {
   return (
-    <div className=" rounded-lg transition-shadow duration-300">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:h-72  sm:justify-center gap-4">
-        <div className="sm:h-72 sm:flex-shrink-0 border rounded-md">
-          <Link to={`/book/${book._id}`}>
-            <img
-              src={`${getImgUrl(book.coverImage)}`}
-              alt=""
-              className="w-full bg-cover p-2 rounded-md cursor-pointer hover:scale-105 transition-all duration-200"
-            />
-          </Link>
-        </div>
+    <div className="flex flex-col items-center border rounded-lg shadow-lg overflow-hidden p-4 bg-white max-w-xs mx-auto transition-transform duration-300 hover:scale-105 sm:max-w-md sm:flex-row sm:items-start">
+      {/* Book Cover */}
+      <div className="w-full sm:w-1/3 flex-shrink-0 mb-4 sm:mb-0 flex justify-center">
+        <Link to={`/book/${book._id}`}>
+          <img
+            src={`${getImgUrl(book?.coverImage)}`}
+            alt="Book Cover"
+            className="w-full h-auto object-cover rounded-md cursor-pointer hover:opacity-90 transition-all duration-200"
+          />
+        </Link>
+      </div>
 
-        <div>
-          <Link to={`/book/${book._id}`}>
-            <h3 className="text-xl font-semibold hover:text-blue-600 mb-3">
-              {book.title}
-            </h3>
-          </Link>
-          <p className="text-gray-600 mb-5">
-            {book.description.length > 100
-              ? `${book.description.slice(0, 100)}...`
-              : book.description}
-          </p>
-          <p className="font-medium mb-5 flex">
-            <span className="line-through font-normal ml-2 flex">
+      {/* Book Details */}
+      <div className="w-full sm:w-2/3 sm:ml-4 flex flex-col items-center sm:items-start text-center sm:text-left">
+        <Link to={`/book/${book._id}`}>
+          <h3 className="text-xl font-semibold text-gray-800 mb-2 hover:text-blue-600">
+            {book?.title}
+          </h3>
+        </Link>
+
+        <p className="text-gray-600 mb-4">
+          {book?.description.length > 100
+            ? `${book?.description.slice(0, 100)}...`
+            : book?.description}
+        </p>
+
+        <div className="w-[auto] flex items-center justify-between sm:flex-col sm:justify-start gap-3">
+          <p className="font-medium text-lg flex items-center text-gray-800 mb-2">
+            <span className="line-through text-gray-500 font-normal flex items-center mr-2">
               <LuIndianRupee />
-              100
+              {book?.oldPrice}
             </span>
-            <LuIndianRupee />
-            80{" "}
+            <span className="flex items-center">
+              <LuIndianRupee />
+              {book?.newPrice}
+            </span>
           </p>
-          <button className="btn-primary px-6 space-x-1 flex items-center gap-1 ">
-            <FiShoppingCart className="" />
-            <span>Add to Cart</span>
+          <button className="btn-primary px-4 py-2 sm:py-[auto] flex items-center gap-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition sm:ml-auto">
+            <FiShoppingCart />
+            <span className="flex">Add to Cart</span>
           </button>
         </div>
+
+
+
+
+        
       </div>
     </div>
   );
