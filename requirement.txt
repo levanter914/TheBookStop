@@ -9,3 +9,7 @@ Front end:-
 
 
   npm run dev
+
+Backend:
+  npm run start command runs "node index.js",
+  npm run start:dev command runs "nodemon index.js"
