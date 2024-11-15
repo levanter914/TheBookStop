@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
+  const [message, setMessage] = useState("");
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-    const [message, setMessage] = useState("");
+  const onSubmit = (data) => console.log(data);
+  const handleGoogleLogin = () => {};
 
   return (
     <div className="flex items-center justify-center min-h-[auto] mb-4 rounded-lg bg-gray-100 dark:bg-transparent mt-2 md:mt-0">
@@ -23,6 +32,7 @@ const Login = () => {
         </p>
         <div className="my-6 space-y-4">
           <button
+            onClick={handleGoogleLogin}
             aria-label="Login with Google"
             type="button"
             className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-600 focus:dark:ring-violet-600"
@@ -70,13 +80,19 @@ const Login = () => {
           <p className="px-3 dark:text-gray-600">OR</p>
           <hr className="w-full dark:text-gray-600" />
         </div>
-        <form noValidate action="" className="space-y-8">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          action=""
+          className="space-y-8"
+        >
           <div className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="email" className="block text-sm">
                 Email address
               </label>
               <input
+                {...register("email", { required: true })}
                 type="email"
                 name="email"
                 id="email"
@@ -98,27 +114,28 @@ const Login = () => {
                 </Link>
               </div>
               <input
+                {...register("password", { required: true })}
                 type="password"
                 name="password"
                 id="password"
                 placeholder="*****"
                 className="w-full px-3 py-2 border rounded-md dark:border-gray-600 dark:bg-transparent dark:text-black focus:dark:border-violet-600"
               />
+              {message && (
+                <p className="text-red-500 text-xs mb-3">{message}</p>
+              )}
             </div>
           </div>
 
-            {
-                
-            }
-
+          {}
 
           <div>
-          <button
-            type="button"
-            className="w-full px-8 py-3 font-semibold rounded-md dark:bg-primary dark:text-black bg-violet-600 text-white hover:bg-secondary"
-          >
-            Sign in
-          </button>
+            <button
+              type="submit"
+              className="w-full px-8 py-3 font-semibold rounded-md dark:bg-primary dark:text-black bg-violet-600 text-white hover:bg-secondary"
+            >
+              Sign in
+            </button>
           </div>
         </form>
       </div>
