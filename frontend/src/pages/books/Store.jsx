@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { LuIndianRupee } from "react-icons/lu";
 import { getImgUrl } from "../../utils/getImgUrl";
 import { Link } from "react-router-dom";
 
 const Store = ({ book }) => {
+
+  useEffect(() => {
+    fetch("books.json")
+      .then((res) => res.json())
+      .then((data) => setBooks(data));
+  }, []);
   return (
     <div className="flex flex-col items-center border rounded-lg shadow-lg overflow-hidden p-4 bg-[#FFF9E6] max-w-xs mx-auto transition-transform duration-300 hover:scale-105 sm:max-w-md sm:flex-row sm:items-start">
       {/* Book Cover */}
-      <div className="w-full sm:w-1/3 flex-shrink-0 mb-4 sm:mb-0 flex justify-center">
+      <div className="relative w-full sm:w-1/3 flex-shrink-0 mb-4 sm:mb-0 flex justify-center">
         <Link to={`/book/${book._id}`}>
           <img
             src={`${getImgUrl(book?.coverImage)}`}
@@ -27,8 +33,8 @@ const Store = ({ book }) => {
         </Link>
 
         <p className="text-gray-600 mb-4">
-          {book?.description.length > 100
-            ? `${book?.description.slice(0, 100)}...`
+          {book?.description.length > 65
+            ? `${book?.description.slice(0, 65)}...`
             : book?.description}
         </p>
 
@@ -54,3 +60,7 @@ const Store = ({ book }) => {
 };
 
 export default Store;
+
+
+
+

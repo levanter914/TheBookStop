@@ -54,7 +54,7 @@ const Books = () => {
         Books <MdLibraryBooks />
       </h2>
 
-      <div className="mb-8 flex items-center mx-4 shadow-xl">
+      <div className="mb-8 flex items-center mx-4 ">
         <select
           onChange={(e) => setSelectedCategory(e.target.value)}
           name="category"
@@ -91,7 +91,7 @@ const Books = () => {
       </Swiper>
 
       <div className="w-full max-w-[50rem] h-full cursor-pointer bg-primary px-4 py-3 flex items-center gap-4 justify-center mx-auto my-auto rounded-lg hover:bg-secondary shadow-xl">
-        <Link to="/store" className="text-white font-semibold text-lg">
+        <Link to="/exploreBooks" className="text-white font-semibold text-lg">
           Explore All Books
         </Link>
         <FaLocationArrow className="text-white text-2xl" />

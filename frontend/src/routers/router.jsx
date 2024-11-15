@@ -5,6 +5,8 @@ import App from "../App";
 import Home from "../pages/Home/Home";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import Store from "../pages/books/Store";
+import ExploreBooks from "../pages/books/ExploreBooks";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,8 +25,8 @@ const router = createBrowserRouter([
         element: <div>order</div>,
       },
       {
-        path: "/store",
-        element: <div>store</div>,
+        path: "/exploreBooks",
+        element: <ExploreBooks />,
       },
       {
         path: "/sell-books",

@@ -8,7 +8,7 @@ import avatarImg from "../assets/avatar.png";
 import logo from "/logo.png";
 
 const navigation = [
-  { name: "Store", href: "/store" },
+  { name: "Store", href: "/exploreBooks" },
   { name: "Sell Books", href: "/sell-books" },
   { name: "Community", href: "/community" },
   { name: "My Profile", href: "/my-profile" },

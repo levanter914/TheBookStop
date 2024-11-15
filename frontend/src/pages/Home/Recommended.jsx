@@ -25,7 +25,7 @@ const Recommended = () => {
 
   return (
     <div className="py-10">
-        <h2 className="text-3xl text-grayBrown font-extrabold mb-6 mx-4 flex gap-2 shadow-xl">
+        <h2 className="text-3xl text-grayBrown font-extrabold mb-6 mx-4 flex gap-2 ">
         Recommended section <MdLibraryBooks />
       </h2>
 
@@ -51,7 +51,7 @@ const Recommended = () => {
       </Swiper>
 
       <div className="w-full max-w-[50rem] h-full cursor-pointer bg-primary px-4 py-3 flex items-center gap-4 justify-center mx-auto my-auto rounded-lg hover:bg-secondary shadow-xl">
-        <Link to="/store" className="text-white font-semibold text-lg">
+        <Link to="/exploreBooks" className="text-white font-semibold text-lg">
           Explore All Books
         </Link>
         <FaLocationArrow className="text-white text-2xl" />
