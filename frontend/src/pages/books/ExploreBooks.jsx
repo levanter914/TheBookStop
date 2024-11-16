@@ -141,7 +141,7 @@ const ExploreBooks = () => {
       </button>
 
       {/* Books Section */}
-      <div className="w-full sm:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="w-fit sm:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
         {filteredBooks.length > 0 ? (
           filteredBooks.map((book) => <Store key={book._id} book={book} />)
         ) : (
@@ -150,6 +150,12 @@ const ExploreBooks = () => {
           </div>
         )}
       </div>
+
+
+
+
+
+      
     </div>
   );
 };
