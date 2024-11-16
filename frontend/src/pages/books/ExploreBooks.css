@@ -1,0 +1,10 @@
+.custom-select option:hover {
+    background-color: #fbe4d8; /* Light Peach */
+    color: #000; /* Black text for better readability */
+  }
+  .custom-dropdown .dropdown-btn {
+    background: #fbe4d8;
+  }
+  
+  .option:hover-section-wrapper => debug
+  

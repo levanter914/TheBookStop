@@ -90,7 +90,7 @@ const Books = () => {
           ))}
       </Swiper>
 
-      <div className="w-full max-w-[50rem] h-full cursor-pointer bg-primary px-4 py-3 flex items-center gap-4 justify-center mx-auto my-auto rounded-lg hover:bg-secondary shadow-xl">
+      <div className="w-full max-w-[50rem] h-full cursor-pointer bg-primary px-4 py-3 flex items-center gap-4 justify-center mx-auto my-auto rounded-lg sm:hover:bg-secondary mt-4 shadow-xl">
         <Link to="/exploreBooks" className="text-white font-semibold text-lg">
           Explore All Books
         </Link>
