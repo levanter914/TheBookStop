@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import React, { useState } from "react";
+import { useDropzone } from "react-dropzone";
 
 const SellBooks = () => {
   const [formData, setFormData] = useState({
-    bookName: '',
-    author: '',
-    isbn: '',
-    description: '',
-    price: '',
+    bookName: "",
+    author: "",
+    isbn: "",
+    description: "",
+    price: "",
     images: [],
   });
   const [errors, setErrors] = useState({});
@@ -33,7 +33,7 @@ const SellBooks = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: 'image/*',
+    accept: "image/*",
   });
 
   // Remove an image
@@ -45,12 +45,15 @@ const SellBooks = () => {
   // Form validation
   const validate = () => {
     const newErrors = {};
-    if (!formData.bookName) newErrors.bookName = 'Book Name is required.';
-    if (!formData.author) newErrors.author = 'Author is required.';
-    if (!formData.isbn) newErrors.isbn = 'ISBN is required.';
-    if (!formData.description) newErrors.description = 'Description is required.';
-    if (!formData.price || isNaN(formData.price)) newErrors.price = 'Valid price is required.';
-    if (formData.images.length === 0) newErrors.images = 'At least one image is required.';
+    if (!formData.bookName) newErrors.bookName = "Book Name is required.";
+    if (!formData.author) newErrors.author = "Author is required.";
+    if (!formData.isbn) newErrors.isbn = "ISBN is required.";
+    if (!formData.description)
+      newErrors.description = "Description is required.";
+    if (!formData.price || isNaN(formData.price))
+      newErrors.price = "Valid price is required.";
+    if (formData.images.length === 0)
+      newErrors.images = "At least one image is required.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -60,31 +63,35 @@ const SellBooks = () => {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
-      console.log('Form Data Submitted:', formData);
+      console.log("Form Data Submitted:", formData);
       // Add actual submission logic here
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center p-6 font-sans text-gray-800">
+    <div className="flex flex-col items-center p-6 font-sans bg-favorite mb-4 shadow-2xl rounded-2xl text-gray-800">
       <div className="flex flex-wrap gap-6 w-full max-w-4xl">
         {/* Left Section */}
         <div className="flex-1 min-w-[300px] flex flex-col items-center justify-center">
           <div
             {...getRootProps()}
             className={`border-2 border-dashed rounded-lg p-6 w-full h-64 flex items-center justify-center cursor-pointer ${
-              isDragActive ? 'bg-blue-100 border-blue-400' : 'bg-gray-50 border-gray-300'
+              isDragActive
+                ? "bg-blue-100 border-blue-400"
+                : "bg-gray-50 border-gray-300"
             }`}
           >
             <input {...getInputProps()} />
             <p className="text-gray-500 text-center">
               {isDragActive
-                ? 'Drop the images here...'
-                : 'Drag and drop images, or click to upload.'}
+                ? "Drop the images here..."
+                : "Drag and drop images, or click to upload."}
             </p>
           </div>
-          {errors.images && <p className="text-red-500 text-sm mt-2">{errors.images}</p>}
+          {errors.images && (
+            <p className="text-red-500 text-sm mt-2">{errors.images}</p>
+          )}
 
           {/* Thumbnails */}
           <div className="flex flex-wrap gap-2 mt-4">
@@ -117,9 +124,12 @@ const SellBooks = () => {
                 name="bookName"
                 value={formData.bookName}
                 onChange={handleInputChange}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="enter the book name"
+                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
               />
-              {errors.bookName && <p className="text-red-500 text-sm mt-1">{errors.bookName}</p>}
+              {errors.bookName && (
+                <p className="text-red-500 text-sm mt-1">{errors.bookName}</p>
+              )}
             </div>
 
             {/* Author */}
@@ -130,9 +140,12 @@ const SellBooks = () => {
                 name="author"
                 value={formData.author}
                 onChange={handleInputChange}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="enter the author name"
+                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
               />
-              {errors.author && <p className="text-red-500 text-sm mt-1">{errors.author}</p>}
+              {errors.author && (
+                <p className="text-red-500 text-sm mt-1">{errors.author}</p>
+              )}
             </div>
 
             {/* ISBN */}
@@ -143,9 +156,12 @@ const SellBooks = () => {
                 name="isbn"
                 value={formData.isbn}
                 onChange={handleInputChange}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="enter the ISBN number"
+                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
               />
-              {errors.isbn && <p className="text-red-500 text-sm mt-1">{errors.isbn}</p>}
+              {errors.isbn && (
+                <p className="text-red-500 text-sm mt-1">{errors.isbn}</p>
+              )}
             </div>
 
             {/* Description */}
@@ -155,10 +171,13 @@ const SellBooks = () => {
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none h-28"
+                placeholder="enter the description minimum 100 words"
+                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary resize-none h-28"
               ></textarea>
               {errors.description && (
-                <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.description}
+                </p>
               )}
             </div>
 
@@ -169,10 +188,13 @@ const SellBooks = () => {
                 type="text"
                 name="price"
                 value={formData.price}
+                placeholder="enter the price in rupees"
                 onChange={handleInputChange}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
               />
-              {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
+              {errors.price && (
+                <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+              )}
             </div>
           </form>
         </div>
@@ -183,13 +205,13 @@ const SellBooks = () => {
         <button
           onClick={handleSubmit}
           disabled={isSubmitting || Object.keys(errors).length > 0}
-          className={`px-8 py-3 bg-blue-500 text-white font-bold rounded-md transition ${
+          className={`px-8 py-3 bg-secondary text-white font-bold rounded-md transition ${
             isSubmitting || Object.keys(errors).length > 0
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'hover:bg-blue-600'
+              ? "bg-gray-400 cursor-not-allowed"
+              : "hover:bg-primary hover:text-white"
           }`}
         >
-          {isSubmitting ? 'Uploading...' : 'Upload'}
+          {isSubmitting ? "Uploading..." : "Upload"}
         </button>
       </div>
     </div>
