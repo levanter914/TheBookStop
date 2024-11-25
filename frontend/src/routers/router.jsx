@@ -7,8 +7,10 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import Store from "../pages/books/Store";
 import ExploreBooks from "../pages/books/ExploreBooks";
+import SellBooks from "../pages/sell/sellbooks";
 import CartPage from "../pages/books/CartPage";
 import CheckOutPage from "../pages/books/CheckOutPage";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/sell-books",
-        element: <div>sell</div>,
+        element: <SellBooks/>,
       },
       {
         path: "/cart",
