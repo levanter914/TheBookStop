@@ -22,7 +22,7 @@
 // export default Preloader;
 
 
-import { BookLoader } from "react-awesome-loaders";
+//import { BookLoader } from "react-awesome-loaders";
 import "./Preloader.css"; // Import the CSS file for Preloader styles
 
 export const Preloader = () => {

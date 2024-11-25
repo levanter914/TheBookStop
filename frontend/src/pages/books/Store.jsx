@@ -3,8 +3,17 @@ import { FiShoppingCart } from "react-icons/fi";
 import { LuIndianRupee } from "react-icons/lu";
 import { getImgUrl } from "../../utils/getImgUrl";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from '../../redux/features/cart/cartSlice'
 
 const Store = ({ book }) => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  };
+
+  const [books, setBooks] = useState([]);
 
   useEffect(() => {
     fetch("books.json")
@@ -49,7 +58,9 @@ const Store = ({ book }) => {
               {book?.newPrice}
             </span>
           </p>
-          <button className="btn-primary px-4 py-2 flex items-center gap-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition sm:ml-auto">
+          <button 
+          onClick={() => handleAddToCart(book)}
+          className="btn-primary px-4 py-2 flex items-center gap-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition sm:ml-auto">
             <FiShoppingCart />
             <span>Add to Cart</span>
           </button>
@@ -60,7 +71,3 @@ const Store = ({ book }) => {
 };
 
 export default Store;
-
-
-
-

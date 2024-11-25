@@ -6,6 +6,7 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import { FaShoppingCart } from "react-icons/fa";
 import avatarImg from "../assets/avatar.png";
 import logo from "/logo.png";
+import { useSelector } from "react-redux";
 
 const navigation = [
   { name: "Store", href: "/exploreBooks" },
@@ -25,6 +26,7 @@ const Navbar = () => {
   const searchInputRef = useRef(null);
   const dropdownRef = useRef(null); // Ref for the dropdown menu
   const currentUser = false;
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   // Toggle search visibility and focus
   const toggleSearch = () => {
@@ -167,9 +169,21 @@ const Navbar = () => {
               className="bg-yellow-100 p-1 sm:px-4 px-2 flex items-center rounded-sm"
             >
               <FaShoppingCart className="text-lg" />
-              <span className="text-xs sm:text-sm font-semibold sm:ml-1">
+
+              {
+              cartItems.length > 0 ? (
+                <span className="text-sm font-semibold sm:ml-1">
+                  {cartItems.length}
+                </span>
+              ) : (
+                <span className="text-sm font-semibold sm:ml-1">0</span>
+              )
+              }
+
+              {/* <span className="text-xs sm:text-sm font-semibold sm:ml-1">
                 0
-              </span>
+              </span> */}
+              
             </Link>
           </div>
         </div>
