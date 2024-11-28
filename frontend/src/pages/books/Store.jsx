@@ -21,7 +21,7 @@ const Store = ({ book }) => {
       .then((data) => setBooks(data));
   }, []);
   return (
-    <div className="flex flex-col items-center border rounded-lg shadow-lg overflow-hidden p-4 bg-[#FFF9E6] max-w-xs mx-auto transition-transform duration-300 hover:scale-105 sm:max-w-md sm:flex-row sm:items-start">
+    <div className="flex flex-col items-center border rounded-lg shadow-lg overflow-hidden p-4 bg-favorite max-w-xs mx-auto transition-transform duration-300 hover:scale-105 sm:max-w-md sm:flex-row sm:items-start">
       {/* Book Cover */}
       <div className="relative w-full sm:w-1/3 flex-shrink-0 mb-4 sm:mb-0 flex justify-center">
         <Link to={`/book/${book._id}`}>

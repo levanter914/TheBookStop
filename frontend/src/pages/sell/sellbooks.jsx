@@ -156,7 +156,7 @@ const SellBooks = () => {
                 name="isbn"
                 value={formData.isbn}
                 onChange={handleInputChange}
-                placeholder="enter the ISBN number"
+                placeholder="enter the 13 digit ISBN number"
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
               />
               {errors.isbn && (

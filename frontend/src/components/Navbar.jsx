@@ -25,7 +25,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchInputRef = useRef(null);
   const dropdownRef = useRef(null); // Ref for the dropdown menu
-  const currentUser = false;
+  const currentUser = true;
   const cartItems = useSelector((state) => state.cart.cartItems);
 
   // Toggle search visibility and focus
