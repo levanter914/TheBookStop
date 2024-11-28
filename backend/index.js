@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 const mongoose = require("mongoose");
 
 // database user:
@@ -13,7 +13,7 @@ require("dotenv").config();
 //middleware
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://thebookstop.vercel.app/'],
+    origin: ['http://localhost:5173', 'https://thebookstop.vercel.app/', 'https://thebookstop.onrender.com'],
     credentials: true
 }))
 
