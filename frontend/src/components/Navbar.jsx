@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaUserLarge } from "react-icons/fa6";
@@ -7,6 +7,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import avatarImg from "../assets/avatar.png";
 import logo from "/logo.png";
 import { useSelector } from "react-redux";
+import { useAuth } from "../context/AuthContext";
+import { LuLogOut } from "react-icons/lu";
 
 const navigation = [
   { name: "Store", href: "/exploreBooks" },
@@ -17,42 +19,60 @@ const navigation = [
   { name: "Orders", href: "/orders" },
   { name: "messages", href: "/messages" },
   { name: "User Reviews", href: "/user-reviews" },
-  { name: "Log Out", href: "/logout" },
 ];
 
 const Navbar = () => {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isFixed, setIsFixed] = useState(false); // Track if navbar is fixed
   const searchInputRef = useRef(null);
-  const dropdownRef = useRef(null); // Ref for the dropdown menu
-  const currentUser = true;
+  const dropdownRef = useRef(null);
+
+  const { currentUser, logout } = useAuth();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
-  // Toggle search visibility and focus
+  const handleLogOut = () => {
+    logout();
+  };
+
   const toggleSearch = () => {
     setIsSearchActive((prev) => !prev);
   };
 
-  // Toggle dropdown visibility
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        // Set the threshold for when the navbar becomes fixed
+        setIsFixed(true); // Apply fixed position
+      } else {
+        setIsFixed(false); // Remove fixed position
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
+        setIsDropdownOpen(false); // Close dropdown on outside click
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside); // Add event listener
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside); // Cleanup event listener
     };
   }, []);
 
-  // Focus the input box whenever search is toggled on
   useEffect(() => {
     if (isSearchActive && searchInputRef.current) {
       searchInputRef.current.focus();
@@ -60,16 +80,20 @@ const Navbar = () => {
   }, [isSearchActive]);
 
   return (
-    <header className="max-w-screen-2xl mx-auto px-4 py-1 font-primary">
+    <header
+      className={`${
+        isFixed
+          ? "fixed top-0 z-50 w-full bg-blackBG shadow-lg"
+          : "w-full bg-transparent"
+      } max-w-screen-2xl mx-auto px-4 py-1 font-primary transition-all duration-300`} // Conditionally add fixed class
+    >
       <nav className="flex items-center justify-between flex-wrap">
-        {/* Left side - Logo */}
         <div className="flex items-center md:gap-16 gap-2">
           <Link to="/">
             <img src={logo} alt="Logo" className="w-20" />
           </Link>
         </div>
 
-        {/* Middle links for large screens only */}
         <div className="hidden md:flex items-center gap-6">
           {navigation.slice(0, 3).map((item) => (
             <Link
@@ -82,16 +106,14 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Right side - Search, Icons, User Dropdown */}
         <div className="flex items-center gap-4 md:gap-6">
-          {/* Search and input */}
           <div className="relative flex items-center">
             <input
               ref={searchInputRef}
               type="text"
               placeholder="Search..."
               className={`${
-                isSearchActive ? "w-40 sm:w-64 md:w-40" : "w-0"
+                isSearchActive ? "w-35 sm:w-64 md:w-40" : "w-0"
               } transition-all duration-300 bg-[#EAEAEA] rounded-md py-1 px-3 md:px-6 focus:outline-none overflow-hidden ${
                 isSearchActive ? "visible" : "invisible"
               } ${isSearchActive ? "sm:w-40 w-24" : ""}`}
@@ -104,7 +126,6 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Icons and user dropdown */}
           <div className="flex items-center gap-2 md:gap-3">
             <button>
               <IoIosHeartEmpty className="text-xl size-6" />
@@ -123,11 +144,9 @@ const Navbar = () => {
                     />
                   </button>
 
-                  {/* Dropdown menu */}
                   {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-xl z-40">
+                    <div className="absolute right-0 mt-2 w-40 bg-favorite rounded-md shadow-xl z-40">
                       <ul>
-                        {/* Show 'Store', 'Sell Books', and 'About' only on small screens */}
                         <div className="md:hidden">
                           {navigation.slice(0, 3).map((item) => (
                             <li key={item.name}>
@@ -141,7 +160,6 @@ const Navbar = () => {
                             </li>
                           ))}
                         </div>
-                        {/* Remaining user options */}
                         {navigation.slice(3).map((item) => (
                           <li key={item.name}>
                             <Link
@@ -153,6 +171,15 @@ const Navbar = () => {
                             </Link>
                           </li>
                         ))}
+
+                        <li>
+                          <button
+                            onClick={handleLogOut}
+                            className="block w-full text-left px-4 py-2 text-sm hover:bg-blackBG text-red-600 font-semibold"
+                          >
+                            Logout <LuLogOut className="inline-block ml-2" />
+                          </button>
+                        </li>
                       </ul>
                     </div>
                   )}
@@ -170,20 +197,13 @@ const Navbar = () => {
             >
               <FaShoppingCart className="text-lg" />
 
-              {
-              cartItems.length > 0 ? (
+              {cartItems.length > 0 ? (
                 <span className="text-sm font-semibold sm:ml-1">
                   {cartItems.length}
                 </span>
               ) : (
                 <span className="text-sm font-semibold sm:ml-1">0</span>
-              )
-              }
-
-              {/* <span className="text-xs sm:text-sm font-semibold sm:ml-1">
-                0
-              </span> */}
-              
+              )}
             </Link>
           </div>
         </div>
