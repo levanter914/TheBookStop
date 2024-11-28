@@ -11,6 +11,7 @@ import SellBooks from "../pages/sell/sellbooks";
 import CartPage from "../pages/books/CartPage";
 import CheckOutPage from "../pages/books/CheckOutPage";
 import PrivateRoute from "./PrivateRoute";
+import SingleBook from "../pages/books/SingleBook";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,12 @@ const router = createBrowserRouter([
         path: "/checkout",
         element: <PrivateRoute> <CheckOutPage /> </PrivateRoute>  ,
       },
+
+      {
+        path: "/book/:id",
+        element: <SingleBook />,
+      },
+
     ],
   },
   
