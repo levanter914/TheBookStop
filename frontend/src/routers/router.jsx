@@ -10,6 +10,7 @@ import ExploreBooks from "../pages/books/ExploreBooks";
 import SellBooks from "../pages/sell/sellbooks";
 import CartPage from "../pages/books/CartPage";
 import CheckOutPage from "../pages/books/CheckOutPage";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -68,13 +69,10 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
-      {
-        path: "/logout",
-        element: <div>logout</div>,
-      },
+      
       {
         path: "/checkout",
-        element: <CheckOutPage />,
+        element: <PrivateRoute> <CheckOutPage /> </PrivateRoute>  ,
       },
     ],
   },
