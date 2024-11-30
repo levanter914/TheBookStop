@@ -12,6 +12,8 @@ import CartPage from "../pages/books/CartPage";
 import CheckOutPage from "../pages/books/CheckOutPage";
 import PrivateRoute from "./PrivateRoute";
 import SingleBook from "../pages/books/SingleBook";
+import OrderPage from "../pages/books/OrderPage";
+import Loading from "../components/Loading";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/orders",
-        element: <div>order</div>,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <OrderPage />{" "}
+          </PrivateRoute>
+        ),
       },
       {
         path: "/exploreBooks",
@@ -36,7 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/sell-books",
-        element: <SellBooks/>,
+        element: <SellBooks />,
       },
       {
         path: "/cart",
@@ -52,8 +59,25 @@ const router = createBrowserRouter([
       },
       {
         path: "/my-profile",
-        element: <div>My profile</div>,
+        element: <div>Dashboard Layout</div>,
       },
+      {
+        path: "/dashboard",
+        element: <div>Dashboard</div>,
+      },
+      {
+        path: "/add-new-books",
+        element: <div>Add new books</div>,
+      },
+      {
+        path: "/edit-books",
+        element: <div>Edit books</div>,
+      },
+      {
+        path: "/delete-books",
+        element: <div>Delete books</div>,
+      },
+
       {
         path: "/community",
         element: <div>Community</div>,
@@ -70,20 +94,27 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
-      
+
       {
         path: "/checkout",
-        element: <PrivateRoute> <CheckOutPage /> </PrivateRoute>  ,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <CheckOutPage />{" "}
+          </PrivateRoute>
+        ),
       },
 
       {
         path: "/book/:id",
         element: <SingleBook />,
       },
-
+      {
+        path: "/load",
+        element: <Loading />,
+      },
     ],
   },
-  
 ]);
 
 export default router;

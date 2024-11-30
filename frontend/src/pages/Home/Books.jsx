@@ -10,6 +10,7 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
+import Loading from "../../components/Loading";
 
 const categories = [
   "choose your genre",
@@ -43,7 +44,7 @@ const Books = () => {
   //     .then((data) => setBooks(data));
   // }, []);
 
-  const { data: books = [] } = useFetchAllBooksQuery();
+  const { data: books = [], isLoading, isError } = useFetchAllBooksQuery();
 
   const filteredBooks =
     selectedCategory === "choose your genre"
@@ -51,6 +52,14 @@ const Books = () => {
       : books.filter(
           (book) => book.category === selectedCategory.toLowerCase()
         );
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <div>Error fetching books. Please try again later.</div>;
+  }
 
   return (
     <div className="py-10">

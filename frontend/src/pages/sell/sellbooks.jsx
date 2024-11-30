@@ -1,5 +1,27 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import axios from "axios";
+
+const categories = [
+  "choose your genre",
+  "fiction",
+  "mystery",
+  "thriller",
+  "fantasy",
+  "science fiction",
+  "romance",
+  "historical",
+  "horror",
+  "adventure",
+  "non-fiction",
+  "biography",
+  "memoir",
+  "self-help",
+  "poetry",
+  "graphic novel",
+  "business",
+  "marketing",
+];
 
 const SellBooks = () => {
   const [formData, setFormData] = useState({
@@ -7,7 +29,9 @@ const SellBooks = () => {
     author: "",
     isbn: "",
     description: "",
-    price: "",
+    category: "",
+    oldPrice: "",
+    newPrice: "",
     images: [],
   });
   const [errors, setErrors] = useState({});
@@ -50,8 +74,12 @@ const SellBooks = () => {
     if (!formData.isbn) newErrors.isbn = "ISBN is required.";
     if (!formData.description)
       newErrors.description = "Description is required.";
-    if (!formData.price || isNaN(formData.price))
-      newErrors.price = "Valid price is required.";
+    if (!formData.category || formData.category === "choose your genre")
+      newErrors.category = "Please select a genre.";
+    if (!formData.oldPrice || isNaN(formData.oldPrice))
+      newErrors.oldPrice = "Valid old price is required.";
+    if (!formData.newPrice || isNaN(formData.newPrice))
+      newErrors.newPrice = "Valid new price is required.";
     if (formData.images.length === 0)
       newErrors.images = "At least one image is required.";
     setErrors(newErrors);
@@ -59,18 +87,54 @@ const SellBooks = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
-      console.log("Form Data Submitted:", formData);
-      // Add actual submission logic here
-      setIsSubmitting(false);
+
+      try {
+        const imageUploads = await Promise.all(
+          formData.images.map(async (image) => {
+            const formData = new FormData();
+            formData.append("file", image.file);
+            formData.append("upload_preset", "your_cloudinary_preset"); // Change if using Cloudinary
+            const response = await axios.post(
+              {getImgUrl}/api/upload,
+              formData
+            );
+            return response.data.secure_url;
+          })
+        );
+
+        const payload = {
+          ...formData,
+          images: imageUploads,
+        };
+
+        // Replace with your API endpoint
+        await axios.post("/api/books", payload);
+        alert("Book added successfully!");
+        setFormData({
+          bookName: "",
+          author: "",
+          isbn: "",
+          description: "",
+          category: "",
+          oldPrice: "",
+          newPrice: "",
+          images: [],
+        });
+      } catch (error) {
+        console.error("Error uploading data:", error);
+        alert("Failed to add the book. Try again!");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
   return (
-    <div className="flex flex-col items-center p-6 font-sans bg-favorite mb-4 shadow-2xl rounded-2xl text-gray-800">
+    <div className="flex flex-col items-center p-6 font-sans bg-favorite mb-4 shadow-2xl rounded-2xl text-gray-800 border border-secondary">
       <div className="flex flex-wrap gap-6 w-full max-w-4xl">
         {/* Left Section */}
         <div className="flex-1 min-w-[300px] flex flex-col items-center justify-center">
@@ -124,7 +188,7 @@ const SellBooks = () => {
                 name="bookName"
                 value={formData.bookName}
                 onChange={handleInputChange}
-                placeholder="enter the book name"
+                placeholder="Enter the book name"
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
               />
               {errors.bookName && (
@@ -140,7 +204,7 @@ const SellBooks = () => {
                 name="author"
                 value={formData.author}
                 onChange={handleInputChange}
-                placeholder="enter the author name"
+                placeholder="Enter the author name"
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
               />
               {errors.author && (
@@ -156,7 +220,7 @@ const SellBooks = () => {
                 name="isbn"
                 value={formData.isbn}
                 onChange={handleInputChange}
-                placeholder="enter the 13 digit ISBN number"
+                placeholder="Enter the 13-digit ISBN number"
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
               />
               {errors.isbn && (
@@ -171,7 +235,7 @@ const SellBooks = () => {
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                placeholder="enter the description minimum 100 words"
+                placeholder="Enter the description (minimum 100 words)"
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary resize-none h-28"
               ></textarea>
               {errors.description && (
@@ -181,38 +245,67 @@ const SellBooks = () => {
               )}
             </div>
 
-            {/* Price */}
+            {/* Category */}
             <div>
-              <label className="block font-medium mb-1">Price</label>
-              <input
-                type="text"
-                name="price"
-                value={formData.price}
-                placeholder="enter the price in rupees"
+              <label className="block font-medium mb-1">Category</label>
+              <select
+                name="category"
+                value={formData.category}
                 onChange={handleInputChange}
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
-              />
-              {errors.price && (
-                <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+              >
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+              {errors.category && (
+                <p className="text-red-500 text-sm mt-1">{errors.category}</p>
               )}
             </div>
+
+            {/* Old Price */}
+            <div>
+              <label className="block font-medium mb-1">Old Price</label>
+              <input
+                type="number"
+                name="oldPrice"
+                value={formData.oldPrice}
+                onChange={handleInputChange}
+                placeholder="Enter the old price"
+                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
+              />
+              {errors.oldPrice && (
+                <p className="text-red-500 text-sm mt-1">{errors.oldPrice}</p>
+              )}
+            </div>
+
+            {/* New Price */}
+            <div>
+              <label className="block font-medium mb-1">New Price</label>
+              <input
+                type="number"
+                name="newPrice"
+                value={formData.newPrice}
+                onChange={handleInputChange}
+                placeholder="Enter the new price"
+                className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
+              />
+              {errors.newPrice && (
+                <p className="text-red-500 text-sm mt-1">{errors.newPrice}</p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-secondary text-white p-3 rounded-md hover:bg-secondary transition"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </button>
           </form>
         </div>
-      </div>
-
-      {/* Upload Button */}
-      <div className="mt-6 flex justify-center w-full">
-        <button
-          onClick={handleSubmit}
-          disabled={isSubmitting || Object.keys(errors).length > 0}
-          className={`px-8 py-3 bg-secondary text-white font-bold rounded-md transition ${
-            isSubmitting || Object.keys(errors).length > 0
-              ? "bg-gray-400 cursor-not-allowed"
-              : "hover:bg-primary hover:text-white"
-          }`}
-        >
-          {isSubmitting ? "Uploading..." : "Upload"}
-        </button>
       </div>
     </div>
   );

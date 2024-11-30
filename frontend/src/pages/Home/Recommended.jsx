@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
+import Loading from "../../components/Loading";
 
 const Recommended = () => {
   // const [books, setBooks] = useState([]);
@@ -21,7 +22,15 @@ const Recommended = () => {
   //     .then((data) => setBooks(data));
   // }, []);
 
-  const { data: books = [] } = useFetchAllBooksQuery();
+  const { data: books = [], isLoading, isError } = useFetchAllBooksQuery();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <div>Error fetching books. Please try again later.</div>;
+  }
 
   return (
     <div className="py-10">

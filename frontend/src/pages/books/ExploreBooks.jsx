@@ -3,6 +3,7 @@ import Store from "./Store";
 import { FiFilter } from "react-icons/fi";
 import "./ExploreBooks.css";
 import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
+import Loading from "../../components/Loading";
 
 const ExploreBooks = () => {
   const { data: books = [], isLoading, isError } = useFetchAllBooksQuery();
@@ -71,7 +72,7 @@ const ExploreBooks = () => {
   };
 
   if (isLoading) {
-    return <div>Loading books...</div>;
+    return <Loading />;
   }
 
   if (isError) {
