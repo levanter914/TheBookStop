@@ -9,7 +9,7 @@ const postABook = async (req, res) => {
       .send({ message: "Book posted successfully", book: newBook });
   } catch (error) {
     console.error("Error creating book", error);
-    res.status(500).send({ message: "Failed to create book" });
+    res.status(500).send({ message: error.message });
   }
 };
 

@@ -24,7 +24,8 @@ const bookSchema = new mongoose.Schema(
 
     coverImage: {
       type: String,
-      required: true,
+      required: false,
+      default: "book-18.png",
     },
 
     oldPrice: {

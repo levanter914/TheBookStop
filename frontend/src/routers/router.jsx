@@ -14,6 +14,7 @@ import PrivateRoute from "./PrivateRoute";
 import SingleBook from "../pages/books/SingleBook";
 import OrderPage from "../pages/books/OrderPage";
 import Loading from "../components/Loading";
+import Contact from "../components/Contact";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/contact-us",
+        element: <Contact />,
       },
 
       {

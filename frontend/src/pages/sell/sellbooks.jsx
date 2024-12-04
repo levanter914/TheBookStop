@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
+//import { getImgUrl } from "../../utils/getImgUrl";
 
 const categories = [
   "choose your genre",
@@ -25,14 +26,14 @@ const categories = [
 
 const SellBooks = () => {
   const [formData, setFormData] = useState({
-    bookName: "",
+    title: "",
     author: "",
     isbn: "",
     description: "",
     category: "",
     oldPrice: "",
     newPrice: "",
-    images: [],
+    images: "book-18.png",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,10 +50,10 @@ const SellBooks = () => {
       file,
       preview: URL.createObjectURL(file),
     }));
-    setFormData((prev) => ({
-      ...prev,
-      images: [...prev.images, ...newImages],
-    }));
+    // setFormData((prev) => ({
+    //   ...prev,
+    //   images: [...prev.images, ...newImages],
+    // }));
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -69,7 +70,7 @@ const SellBooks = () => {
   // Form validation
   const validate = () => {
     const newErrors = {};
-    if (!formData.bookName) newErrors.bookName = "Book Name is required.";
+    if (!formData.title) newErrors.title = "Book Name is required.";
     if (!formData.author) newErrors.author = "Author is required.";
     if (!formData.isbn) newErrors.isbn = "ISBN is required.";
     if (!formData.description)
@@ -80,8 +81,8 @@ const SellBooks = () => {
       newErrors.oldPrice = "Valid old price is required.";
     if (!formData.newPrice || isNaN(formData.newPrice))
       newErrors.newPrice = "Valid new price is required.";
-    if (formData.images.length === 0)
-      newErrors.images = "At least one image is required.";
+    // if (formData.images.length === 0)
+    //   newErrors.images = "At least one image is required.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -93,40 +94,37 @@ const SellBooks = () => {
       setIsSubmitting(true);
 
       try {
-        const imageUploads = await Promise.all(
-          formData.images.map(async (image) => {
-            const formData = new FormData();
-            formData.append("file", image.file);
-            formData.append("upload_preset", "your_cloudinary_preset"); // Change if using Cloudinary
-            const response = await axios.post(
-              {getImgUrl}/api/upload,
-              formData
-            );
-            return response.data.secure_url;
-          })
-        );
+        // const imageUploads = await Promise.all(
+        //   formData.images.map(async (image) => {
+        //     const formData = new FormData();
+        //     formData.append("file", image.file);
+        //     formData.append("upload_preset", "your_cloudinary_preset"); // Change if using Cloudinary
+        //     const response = await axios.post(
+        //       `${getImgUrl}/api/upload`,
+        //       formData
+        //     );
+        //     return response.data.secure_url;
+        //   })
+        // );
 
         const payload = {
           ...formData,
-          images: imageUploads,
+          images: "book-18.png",
         };
 
         // Replace with your API endpoint
-        await axios.post("/api/books", payload);
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/books/create-book`, payload);
         alert("Book added successfully!");
         setFormData({
-          bookName: "",
-          author: "",
-          isbn: "",
+          title: "",
           description: "",
           category: "",
           oldPrice: "",
           newPrice: "",
-          images: [],
         });
       } catch (error) {
         console.error("Error uploading data:", error);
-        alert("Failed to add the book. Try again!");
+        alert(error);
       } finally {
         setIsSubmitting(false);
       }
@@ -153,13 +151,13 @@ const SellBooks = () => {
                 : "Drag and drop images, or click to upload."}
             </p>
           </div>
-          {errors.images && (
+          {/* {errors.images && (
             <p className="text-red-500 text-sm mt-2">{errors.images}</p>
-          )}
+          )} */}
 
           {/* Thumbnails */}
           <div className="flex flex-wrap gap-2 mt-4">
-            {formData.images.map((img, index) => (
+            {/* {formData.images.map((img, index) => (
               <div key={index} className="relative w-20 h-20">
                 <img
                   src={img.preview}
@@ -173,7 +171,7 @@ const SellBooks = () => {
                   ×
                 </button>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
 
@@ -185,14 +183,14 @@ const SellBooks = () => {
               <label className="block font-medium mb-1">Book Name</label>
               <input
                 type="text"
-                name="bookName"
-                value={formData.bookName}
+                name="title"
+                value={formData.title}
                 onChange={handleInputChange}
                 placeholder="Enter the book name"
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-secondary"
               />
-              {errors.bookName && (
-                <p className="text-red-500 text-sm mt-1">{errors.bookName}</p>
+              {errors.title && (
+                <p className="text-red-500 text-sm mt-1">{errors.title}</p>
               )}
             </div>
 
