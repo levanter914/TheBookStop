@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 //import { getImgUrl } from "../../utils/getImgUrl";
+import Swal from 'sweetalert2'
 
 const categories = [
   "choose your genre",
@@ -114,7 +115,13 @@ const SellBooks = () => {
 
         // Replace with your API endpoint
         await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/books/create-book`, payload);
-        alert("Book added successfully!");
+        //alert("Book added successfully!");
+        Swal.fire({
+          icon: "success",
+          title: "Wow! Your has been listed",
+          text: "Book added successfully!",
+          footer: '<a href="/my-listings">Your listd books</a>'
+        });
         setFormData({
           title: "",
           description: "",

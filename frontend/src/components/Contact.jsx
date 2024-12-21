@@ -68,6 +68,7 @@ function Contact() {
               id="name"
               name="name"
               required
+              placeholder="Enter your name"
               className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-secondary focus:outline-none"
             />
           </div>
@@ -82,6 +83,7 @@ function Contact() {
               id="email"
               name="email"
               required
+              placeholder="Enter your email"
               className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-secondary focus:outline-none"
             />
           </div>
@@ -98,6 +100,7 @@ function Contact() {
               id="message"
               name="message"
               required
+              placeholder="Enter your message"
               rows="4"
               className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-secondary focus:outline-none"
             ></textarea>

@@ -15,6 +15,8 @@ import SingleBook from "../pages/books/SingleBook";
 import OrderPage from "../pages/books/OrderPage";
 import Loading from "../components/Loading";
 import Contact from "../components/Contact";
+import Faqs from "../components/Faqs";
+import About from "../components/About";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <div>About</div>,
+        element: <About />,
       },
       {
         path: "/orders",
@@ -90,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/faqs",
+        element: <Faqs />,
       },
       {
         path: "/register",
