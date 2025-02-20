@@ -20,8 +20,8 @@ TheBookStop is a second-hand book buying and selling platform that connects book
 </p>
 <p align="center">
   <!-- Two images in a row -->
-  <img src="books.png" alt="Image 1" width="200">
-  <img src="form.png" alt="Image 2" width="200">
+  <img src="books.png" alt="Image 1" width="300">
+  <img src="forms.png" alt="Image 2" width="300">
 </p>
 <p align="center">
   <!-- Three images in a row -->
